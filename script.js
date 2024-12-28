@@ -13,7 +13,7 @@ const gbpQuote = 7.79;
 
 
 /**
- * 
+ * Function to calculate Quote using amount value and returns value calculated.
  * @param {Number} amount Quantity to convert (input field value).
  */
 function calculateQuote(amount) {
@@ -43,14 +43,14 @@ submitButton.addEventListener('click', (event) => {
     event.preventDefault();
 
     let amount = amountField.value;
+
     let valueConverted = calculateQuote(amount).toFixed(2);
     valueConverted = String(valueConverted);
-
     valueConverted = valueConverted.replace(".", ",");
     
     if(amount !== '' && currencyField.value !== ''){
         footerBox.style.display = 'inherit';
-        description.textContent = `${(currencyField.value === 'USD') ? `US$ 1 = R$ ${dolarQuote}` : currencyField.value === 'EUR' ? `EUR 1 = R$ ${euroQuote}` : `GBP 1 = R$ ${gbpQuote}` }`;
+        description.textContent = `${(currencyField.value === 'USD') ? `US$ 1 = ${formatCurrencyBRL(dolarQuote)}` : currencyField.value === 'EUR' ? `EUR€ 1 = ${formatCurrencyBRL(euroQuote)}` : `GBP£ 1 = ${formatCurrencyBRL(gbpQuote)}` }`;
         resultValue.textContent = `${valueConverted} Reais`;
     } else {
         alert('Preencha os campos obrigatórios');
@@ -62,3 +62,15 @@ amountField.addEventListener('input', () => {
     const hasCharactersRegex = /\D+/g;
     amountField.value = amountField.value.replace(hasCharactersRegex, "");
 })
+
+/**
+ * Function to format the currency in Brazilian Real.
+ * @param {Number} value Quote of currency 
+ * @returns Currency formated using pt-BR currency style.
+ */
+function formatCurrencyBRL(value) {
+    return Number(value).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
