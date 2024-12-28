@@ -56,3 +56,9 @@ submitButton.addEventListener('click', (event) => {
         alert('Preencha os campos obrigatórios');
     }
 })
+
+amountField.addEventListener('input', () => {
+    
+    const hasCharactersRegex = /\D+/g;
+    amountField.value = amountField.value.replace(hasCharactersRegex, "");
+})
